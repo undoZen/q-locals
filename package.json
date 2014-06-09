@@ -22,5 +22,11 @@
   "bugs": {
     "url": "https://github.com/undoZen/q-locals/issues"
   },
-  "homepage": "https://github.com/undoZen/q-locals"
+  "homepage": "https://github.com/undoZen/q-locals",
+  "dependencies": {
+    "q": "^1.0.1"
+  },
+  "devDependencies": {
+    "express": "^4.4.1"
+  }
 }
