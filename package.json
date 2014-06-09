@@ -1,0 +1,26 @@
+{
+  "name": "q-locals",
+  "version": "0.1.0",
+  "description": "resolve res.locals before render it",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/undoZen/q-locals.git"
+  },
+  "keywords": [
+    "q",
+    "promise",
+    "express",
+    "locals",
+    "render"
+  ],
+  "author": "undoZen <opensource@undozen.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/undoZen/q-locals/issues"
+  },
+  "homepage": "https://github.com/undoZen/q-locals"
+}
