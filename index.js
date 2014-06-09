@@ -26,11 +26,10 @@ function whenObject(obj) {
 }
 
 exports.augmentResponse = function (resProto) {
-  var _render = resProto.render;
-  var _json = resProto.json;
-  resProto.render = function (view, options, fn) {
+  var res = Object.create(resProto);
+  res.render = function (view, options, fn) {
     options = options || {};
-    //
+
     // support callback function as second arg
     if ('function' == typeof options) {
       fn = options, options = {};
@@ -40,19 +39,22 @@ exports.augmentResponse = function (resProto) {
     Q.all([whenObject(that.locals), whenObject(options)])
     .spread(function (locals, opts) {
       that.locals = locals;
-      _render.call(that, view, opts, fn);
+      resProto.render.call(that, view, opts, fn);
     })
     .fail(that.req.next)
     .done();
   };
-  resProto.json = function (obj) {
+  res.json = function (obj) {
     var that = this;
     var a1 = Array.prototype.slice.call(arguments, 1);
+    console.log(obj);
     whenObject(obj)
     .then(function (robj) {
-      _json.apply(that, [robj].concat(a1));
+      console.log(robj);
+      resProto.json.apply(that, [robj].concat(a1));
     })
     .fail(that.req.next)
     .done();
   };
+  return res;
 };

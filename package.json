@@ -27,6 +27,7 @@
     "q": "^1.0.1"
   },
   "devDependencies": {
-    "express": "^4.4.1"
+    "express": "^4.4.1",
+    "supertest": "^0.13.0"
   }
 }
