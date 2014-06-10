@@ -2,6 +2,8 @@
 
 var Q = require('q');
 
+exports = module.exports = augmentResponse;
+
 exports.whenObject = whenObject;
 function whenObject(obj) {
   if (obj === null || !~['function', 'object'].indexOf(typeof obj)) return Q(obj);
@@ -25,7 +27,10 @@ function whenObject(obj) {
   })
 }
 
-exports.augmentResponse = function (resProto) {
+exports.createResponse = createResponse;
+function createResponse(resProto) {
+  var _render = resProto.render;
+  var _json = resProto.json;
   var res = Object.create(resProto);
   res.render = function (view, options, fn) {
     options = options || {};
@@ -39,7 +44,7 @@ exports.augmentResponse = function (resProto) {
     Q.all([whenObject(that.locals), whenObject(options)])
     .spread(function (locals, opts) {
       that.locals = locals;
-      resProto.render.call(that, view, opts, fn);
+      _render.call(that, view, opts, fn);
     })
     .fail(that.req.next)
     .done();
@@ -47,14 +52,19 @@ exports.augmentResponse = function (resProto) {
   res.json = function (obj) {
     var that = this;
     var a1 = Array.prototype.slice.call(arguments, 1);
-    console.log(obj);
     whenObject(obj)
     .then(function (robj) {
-      console.log(robj);
-      resProto.json.apply(that, [robj].concat(a1));
+      _json.apply(that, [robj].concat(a1));
     })
     .fail(that.req.next)
     .done();
   };
   return res;
 };
+
+function augmentResponse(resProto) {
+  if ('object' == typeof resProto.response) resProto = resProto.response;
+  var res = createResponse(resProto);
+  resProto.json = res.json;
+  resProto.render = res.render;
+}
