@@ -41,6 +41,8 @@ function createResponse(resProto) {
     }
 
     var that = this;
+    if (that.locals.qLocalsProcessed) return _render.call(that, view, options, fn);
+    that.locals.qLocalsProcessed = true;
     Q.all([whenObject(that.locals), whenObject(options)])
     .spread(function (locals, opts) {
       that.locals = locals;
