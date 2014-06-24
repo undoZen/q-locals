@@ -56,7 +56,6 @@ function createResponse(resProto) {
     var a1 = Array.prototype.slice.call(arguments, 1);
     (Q.isPromise(obj) ? obj : whenObject(obj))
     .then(function (robj) {
-      console.log(robj);
       _json.apply(that, [robj].concat(a1));
     })
     .fail(that.req.next)
