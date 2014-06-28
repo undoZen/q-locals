@@ -17,7 +17,7 @@ function whenObject(obj) {
   var cobj = keys.reduce(function (r, k) {
     r[k] = obj[k];
     return r;
-  }, {});
+  }, Array.isArray(obj) ? [] : {});
   return Q.all(pvalues)
   .then(function (values) {
     values.forEach(function (v, i) {

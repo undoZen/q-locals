@@ -1,6 +1,6 @@
 {
   "name": "q-locals",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "resolve res.locals before render it",
   "main": "index.js",
   "scripts": {
